@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/reg/static/reg.css">
+    <link rel="icon" href="/reg/static/favicon.png" type="image/png">
+    <title>{{ title }}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+    {% block content %}
+    {{ content | safe }}
+    {% endblock %}
+  </body>
+</html>

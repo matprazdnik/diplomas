@@ -1,0 +1,9 @@
+{% extends "template.html" %}
+{% block content %}
+  <table>
+  <tr><th></th><th>Event</th><th>State</th></tr>
+  {% for item in xlist %}
+    <tr><td>{{ item.id }}</td><td>{{ item.name }}</td><td>{{ item.state }}</td></tr>
+  {% endfor %}
+  </table>
+{% endblock %}
