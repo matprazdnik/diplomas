@@ -177,7 +177,7 @@ for row in users:
   tex.write ('\\vskip 1.5cm\n')
   tex.write ('\\center{\\resizebox{!}{1.2cm}{\\textit{' + first_name + ' ' + last_name + '}}}\n')
   tex.write ('\\center{\\huge ' + gender + ' ' + grade + ' класса \\\\\n')
-  tex.write ('' + school + ' \\\\\n')
+  tex.write ('(' + school + ') \\\\\n')
   tex.write ('за успешное выступление \\\\\n')
   tex.write ('на XXVI Математическом празднике \\\\\n')
   tex.write ('15 февраля 2015 года\n\n}\n\n')
