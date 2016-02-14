@@ -23,7 +23,7 @@ config = {
 dbc = config['db']
 conn = cymysql.connect(host=dbc['host'], user=dbc['user'], passwd=dbc['passwd'], db=dbc['db'], charset=dbc['charset'])
 cur = conn.cursor()
-cur.execute ('select id, first_name, last_name, gender, school, grade, degree, state from users where state >= 100 and state < 200 limit 1')
+cur.execute ('select id, first_name, last_name, gender, school, grade, degree, state from users where state >= 100 and state < 200 limit 2000')
 users = cur.fetchall ()
 for e in users:
   user_id = e[0]
@@ -94,9 +94,9 @@ for e in users:
   call (['pdflatex', file_name + '.tex'])
   call (['pdf2ps', file_name + '.pdf'])
 
-  call (['mv', file_name + '.tex', '../static/'])
-  call (['mv', file_name + '.pdf', '../static/'])
-  call (['mv', file_name + '.ps', '../static/'])
+  call (['mv', file_name + '.tex', 'site/static/'])
+  call (['mv', file_name + '.pdf', 'site/static/'])
+  call (['mv', file_name + '.ps', 'site/static/'])
   
   cur.execute ('update users set state = 300 where id=%s', [str (user_id)])
   conn.commit ()

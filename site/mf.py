@@ -17,7 +17,7 @@ config = {
     }
 }
 
-def get_state_str(user_id, state)
+def get_state_str(user_id, state):
     if state < 100:
         return 'новый'
     elif state < 200:
@@ -25,9 +25,9 @@ def get_state_str(user_id, state)
     elif state < 300:
         return 'идет генерация'
     elif state < 400:
-        return 'готово, <a href="/mf/static/u' + str(user_id) + '.tex">TeX</a>, ' + \
-            '<a href="/mf/static/u' + str(user_id) + '.pdf">PDF</a>, ' + \
-            '<a href="/mf/static/u' + str(user_id) + '.ps">PS</a>'
+        return 'готово, <a href="/static/u' + str(user_id) + '.tex">TeX</a>, ' + \
+            '<a href="/static/u' + str(user_id) + '.pdf">PDF</a>, ' + \
+            '<a href="/static/u' + str(user_id) + '.ps">PS</a>'
     else:
         return 'ОШИБКА'
 
@@ -120,5 +120,5 @@ def edit_user():
     return redirect('/user' + str(user_id), code = 302)
     
 if __name__ == '__main__':
-    mf.debug = False
-    mf.run(port=5200)
+    mf.debug = True
+    mf.run(host='0.0.0.0',port=5200)
