@@ -53,7 +53,7 @@ def index():
         degree = e[6]
         state = e[7]
         state_str = get_state_str(user_id, state)
-        user_link = '<a href="/mf/user' + str(user_id) + '">' + first_name + ' ' + last_name + '</a>'
+        user_link = '<a href="/user' + str(user_id) + '">' + first_name + ' ' + last_name + '</a>'
         content += '<tr><td>' + str(user_id) + '</td><td>' + user_link + '</td><td>' + gender + '</td><td>' + school + \
             '</td><td>' + grade + '</td><td>' + degree + '</td><td>' + state_str + '</td></tr>\n'
     content += '</table>\n'
@@ -82,7 +82,7 @@ def user(user_id):
     degree = e[6]
     state = e[7]
     state_str = get_state_str(user_id, state)
-    content += '<form action="/mf/edit_user" method="POST">\n'
+    content += '<form action="/edit_user" method="POST">\n'
     content += '    <table>\n'
     content += '        <input type="hidden" name="id" value="' + str(user_id) + '" />\n'
     content += '        <tr><td>Имя</td><td><input type="text" name="first_name" value="' + cgi.escape(first_name) + '" /></td></tr>\n'
