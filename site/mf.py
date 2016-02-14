@@ -25,6 +25,7 @@ def get_state_str(user_id, state):
     elif state < 300:
         return 'идет генерация'
     elif state < 400:
+        user_id = cgi.escape(str(user_id))
         return 'готово, <a href="/static/u' + str(user_id) + '.tex">TeX</a>, ' + \
             '<a href="/static/u' + str(user_id) + '.pdf">PDF</a>, ' + \
             '<a href="/static/u' + str(user_id) + '.ps">PS</a>'
@@ -91,7 +92,7 @@ def user(user_id):
     content += '        <tr><td>Школа</td><td><input type="text" name="school" value="' + cgi.escape(school) + '" /></td></tr>\n'
     content += '        <tr><td>Класс</td><td><input type="text" name="grade" value="' + cgi.escape(grade) + '" /></td></tr>\n'
     content += '        <tr><td>Степень диплома</td><td><input type="text" name="degree" value="' + cgi.escape(degree) + '" /></td></tr>\n'
-    content += '        <tr><td>Состояние</td><td>' + cgi.escape(state_str) + '</td></tr>\n'
+    content += '        <tr><td>Состояние</td><td>' + state_str + '</td></tr>\n'
     content += '        <tr><td><input type="submit" value="Обновить информацию" /></td><td></td></tr>\n'
     content += '    </table>\n'
     content += '</form>\n'
@@ -118,7 +119,7 @@ def edit_user():
     cur.close()
     conn.close()
     return redirect('/user' + str(user_id), code = 302)
-    
+
 if __name__ == '__main__':
     mf.debug = True
     mf.run(host='0.0.0.0',port=5200)
