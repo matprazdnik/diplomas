@@ -103,40 +103,23 @@ def process_school_name(school):
   else:
     print (str (i) + ' school: ' + school)
   return school
-  
+
+def write_beginning(tex1):
+    tex1.write ('\\documentclass[a4paper,landscape]{article}\n\n')
+    tex1.write ('\\usepackage[utf8]{inputenc}\n')
+    tex1.write ('\\usepackage[T2A]{fontenc}\n')
+    tex1.write ('\\usepackage[top=0.69in,bottom=0.69in,left=1in,right=1in]{geometry}\n')
+    tex1.write ('\\usepackage{graphicx}\n\n')
+    tex1.write ('\\pagestyle{empty}\n\n')
+    tex1.write ('\\begin{document}\n')
+
+
 file_name = sys.argv[2]
-tex1 = open (file_name + '-d1.tex', mode = 'w', encoding = 'utf-8')
-tex1.write ('\\documentclass[a4paper,landscape]{article}\n\n')
-tex1.write ('\\usepackage[utf8]{inputenc}\n')
-tex1.write ('\\usepackage[T2A]{fontenc}\n')
-tex1.write ('\\usepackage[top=0.69in,bottom=0.69in,left=1in,right=1in]{geometry}\n')
-tex1.write ('\\usepackage{graphicx}\n\n')
-tex1.write ('\\pagestyle{empty}\n\n')
-tex1.write ('\\begin{document}\n')
-tex2 = open (file_name + '-d2.tex', mode = 'w', encoding = 'utf-8')
-tex2.write ('\\documentclass[a4paper,landscape]{article}\n\n')
-tex2.write ('\\usepackage[utf8]{inputenc}\n')
-tex2.write ('\\usepackage[T2A]{fontenc}\n')
-tex2.write ('\\usepackage[top=0.69in,bottom=0.69in,left=1in,right=1in]{geometry}\n')
-tex2.write ('\\usepackage{graphicx}\n\n')
-tex2.write ('\\pagestyle{empty}\n\n')
-tex2.write ('\\begin{document}\n')
-tex3 = open (file_name + '-d3.tex', mode = 'w', encoding = 'utf-8')
-tex3.write ('\\documentclass[a4paper,landscape]{article}\n\n')
-tex3.write ('\\usepackage[utf8]{inputenc}\n')
-tex3.write ('\\usepackage[T2A]{fontenc}\n')
-tex3.write ('\\usepackage[top=0.69in,bottom=0.69in,left=1in,right=1in]{geometry}\n')
-tex3.write ('\\usepackage{graphicx}\n\n')
-tex3.write ('\\pagestyle{empty}\n\n')
-tex3.write ('\\begin{document}\n')
-tex4 = open (file_name + '-pg.tex', mode = 'w', encoding = 'utf-8')
-tex4.write ('\\documentclass[a4paper,landscape]{article}\n\n')
-tex4.write ('\\usepackage[utf8]{inputenc}\n')
-tex4.write ('\\usepackage[T2A]{fontenc}\n')
-tex4.write ('\\usepackage[top=0.69in,bottom=0.69in,left=1in,right=1in]{geometry}\n')
-tex4.write ('\\usepackage{graphicx}\n\n')
-tex4.write ('\\pagestyle{empty}\n\n')
-tex4.write ('\\begin{document}\n')
+prefixes = ['-d1', '-d2', '-d3', '-pg', '-none']
+tex_files = [open (file_name + prefixes[i] + '.tex', mode='w', encoding='utf-8') for i in range(5)]
+for i in tex_files:
+  write_beginning(i)
+
 users = csv.reader (open (sys.argv[1]))
 i = 0
 for row in users:
@@ -144,28 +127,28 @@ for row in users:
   i += 1
   if i == 1:
     continue
-  
+
   if gender == 'м' or gender == 'М':
     gender = 'ученик'
   elif gender == 'ж' or gender == 'Ж':
     gender = 'ученица'
 
   if degree == 'None':
-    tex = tex4
+    tex = tex_files[4]
     degree = 'НЕТ'
     continue
   elif int (degree) >= 30:
     degree = 'первой степени'
-    tex = tex1
+    tex = tex_files[0]
   elif int (degree) >= 24:
     degree = 'второй степени'
-    tex = tex2
+    tex = tex_files[1]
   elif int (degree) >= 19:
     degree = 'третьей степени'
-    tex = tex3
+    tex = tex_files[2]
   elif int (degree) >= 14:
     degree = ''
-    tex = tex4
+    tex = tex_files[3]
   else:
     continue
 
@@ -205,20 +188,10 @@ for row in users:
   tex.write ('\\end{tabular}\n')
   tex.write ('\\newpage\n')
 
-tex1.write ('\\end{document}\n')
-tex1.close ()
-tex2.write ('\\end{document}\n')
-tex2.close ()
-tex3.write ('\\end{document}\n')
-tex3.close ()
-tex4.write ('\\end{document}\n')
-tex4.close ()
+for i in tex_files:
+    i.write ('\\end{document}\n')
+    i.close()
 
-call (['pdflatex', file_name + '-d1.tex'])
-call (['pdf2ps', file_name + '-d1.pdf'])
-call (['pdflatex', file_name + '-d2.tex'])
-call (['pdf2ps', file_name + '-d2.pdf'])
-call (['pdflatex', file_name + '-d3.tex'])
-call (['pdf2ps', file_name + '-d3.pdf'])
-call (['pdflatex', file_name + '-pg.tex'])
-call (['pdf2ps', file_name + '-pg.pdf'])
+for i in prefixes:
+    call (['pdflatex', file_name + i + '.tex'])
+    call (['pdf2ps', file_name + i + '.pdf'])
