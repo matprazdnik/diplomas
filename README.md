@@ -38,6 +38,10 @@ exit
 
 ```
 python3 import-csv.py diplomas.csv
+
+# mysql -u root -p
+use mf;
+update users set state=100  where degree > 10;
 ```
 
 ```
