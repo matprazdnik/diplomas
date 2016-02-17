@@ -5,12 +5,7 @@ pip3 install -r requirements.txt
 ```
 
 ```
-# apt-get install texlive-latex-base
-# apt-get install texlive-lang-cyrillic
-# apt-get install texlive-latex-recommended
-# apt-get install texlive-fonts-recommended
-# apt-get install texlive-latex-extra
-# apt-get install mysql-server
+# apt-get install texlive-latex-base texlive-lang-cyrillic texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra mysql-server
 # /usr/bin/mysql_secure_installation
 # mysql -u root -p
 
