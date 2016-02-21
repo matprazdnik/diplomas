@@ -9,6 +9,8 @@ import csv
 import sys
 import re
 
+school_log = open("schools.log", "w");
+
 def process_school_name(school):
   if school[0:6] == 'школа ':
     school = 'школы ' + school[6:]
@@ -85,7 +87,7 @@ def process_school_name(school):
   elif school == 'Костромской кадетский корпус':
     school = 'Костромского кадетского корпуса'
   elif school == 'семейное образование':
-    school = 'семейное образование'
+    school = 'семейного образования'
   elif school == 'Раменская № 2 г. Раменское':
     school = 'Раменской № 2 г. Раменское'
   elif school == 'Славяно-англо-американская <<Марина>> школа':
@@ -99,9 +101,49 @@ def process_school_name(school):
   elif school == 'лесная школа, г. Лесная Чаща':
     school = 'лесной школы, г. Лесная Чаща'
   elif school == 'sch333333':
-    school = 'школы Юного Песца'
+    school = 'школы Юного Песца'    
+  elif school == 'православная школа-пансион "Плесково"':
+    school = 'православной школы-пансиона "Плесково"'
+  elif school == 'Костромской кадетский корпус г. Кострома':
+    school = 'Костромского кадетского корпуса г. Кострома'
+  elif school == 'Государственная столичная гимназия':
+    school = 'Государственной столичной гимназии'
+  elif school == 'Газпром школа':
+    school = 'Газпром школы'
+  elif school == 'Лесная Школа':
+    school = 'Лесной Школы'
+  elif school == 'образовательный центр им С.Н. Олехника':
+    school = 'образовательного центра им С.Н. Олехника'
+  elif school == 'Православная классическая гимназия "Ковчег", Московская обл.':
+    school = 'Православной классической гимназии "Ковчег", Московская обл.'
+  elif school == 'Курчатовская школа':
+    school = 'Курчатовской школы'
+  elif school == 'лицейско-гимназический комплекс на Юго-Востоке':
+    school = 'лицейско-гимназического комплекса на Юго-Востоке'
+  elif school == 'Солоницевский учебно-воспитательный комплекс  <<Жемчужина>> пос. Солоницевка':
+    school = 'Солоницевского учебно-воспитательного комплекса  <<Жемчужина>> пос. Солоницевка'
+  elif school == 'Инженерно-техническая школа':
+    school = 'Инженерно-технической школы'
+  elif school == 'Славянско-англо-американская школа "Марина"':
+    school = 'Славянско-англо-американской школы "Марина"'
+  elif school == 'Государственная столичная гимназия':
+    school = 'Государственной столичной гимназии'
+  elif school == 'Международная английская школа, д. Грибаново, Московская обл.':
+    school = 'Международной английской школы, д. Грибаново, Московская обл.'
+  elif school == 'Мехельтинская средняя школа, Республика Дагестан':
+    school = 'Мехельтинской средней школы, Республика Дагестан'
+  elif school == 'Государственная столичная гимназия':
+    school = 'Государственной столичной гимназии'
+  elif school == 'Инженерно-техническая школа':
+    school = 'Инженерно-технической школы'
+  elif school == 'Российская международная школа г. Домодедово, Московская обл.':
+    school = 'Российской международной школы г. Домодедово, Московская обл.'
+  elif school == 'Мехельтинская средняя школа, Республика Дагестан':
+    school = 'Мехельтинской средней школы, Республика Дагестан'
+  elif school == 'Государственная столичная гимназия':
+    school = 'Государственной столичной гимназии'  
   else:
-    print (str (i) + ' school: ' + school)
+    print (str (i) + ' school: ' + school, file=school_log)
   return school
 
 def write_beginning(tex1):
@@ -122,6 +164,7 @@ for i in tex_files:
 
 users = csv.reader (open (sys.argv[1]))
 i = 0
+
 for row in users:
   first_name, last_name, school, grade, gender, degree = row[3], row[4], row[7], row[6], row[5], row[8]
   i += 1
@@ -137,21 +180,22 @@ for row in users:
     tex = tex_files[4]
     degree = 'НЕТ'
     continue
-  elif int (degree) >= 30:
+  elif int (degree) >= 28:
     degree = 'первой степени'
     tex = tex_files[0]
-  elif int (degree) >= 24:
+  elif int (degree) >= 20:
     degree = 'второй степени'
     tex = tex_files[1]
-  elif int (degree) >= 19:
+  elif int (degree) >= 16:
     degree = 'третьей степени'
     tex = tex_files[2]
-  elif int (degree) >= 14:
+  elif int (degree) >= 11:
     degree = ''
     tex = tex_files[3]
   else:
-    continue
+      continue
 
+  school = process_school_name(school);
   school = re.sub ('"(.*)"', '<<\\1>>', school)
   school = re.sub ('«', '<<', school)
   school = re.sub ('“', '<<', school)
@@ -177,10 +221,10 @@ for row in users:
   tex.write ('\\vskip 1.5cm\n')
   tex.write ('\\center{\\resizebox{!}{1.2cm}{\\textit{' + first_name + ' ' + last_name + '}}}\n')
   tex.write ('\\center{\\huge ' + gender + ' ' + grade + ' класса \\\\\n')
-  tex.write ('(' + school + ') \\\\\n')
+  tex.write (school + '\\\\\n')
   tex.write ('за успешное выступление \\\\\n')
-  tex.write ('на XXVI Математическом празднике \\\\\n')
-  tex.write ('15 февраля 2015 года\n\n}\n\n')
+  tex.write ('на XXVII Математическом празднике \\\\\n')
+  tex.write ('21 февраля 2016 года\n\n}\n\n')
   tex.write ('\\vskip 0.2cm\n\n')
   tex.write ('\\begin{tabular}{p{6cm}p{6cm}p{6cm}p{6cm}}\n')
   tex.write ('  \\flushleft{\\large Заместитель председателя оргкомитета Математического~праздника, зам.~директора МЦНМО} & & \\flushleft{\\large Председатель~жюри Математического~праздника, директор МЦНМО и ЦПМ} &  \\\\\n')
@@ -193,5 +237,8 @@ for i in tex_files:
     i.close()
 
 for i in prefixes:
+  if i != '-none':
     call (['pdflatex', file_name + i + '.tex'])
     call (['pdf2ps', file_name + i + '.pdf'])
+
+school_log.close()
